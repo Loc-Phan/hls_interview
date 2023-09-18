@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { JOKES } from "@/constants";
 import Button from "@/components/Button";
+import useCookie from "./hooks/useCookie";
 
 const Joke = () => {
-	const [currentJoke, setCurrentJoke] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [currentJoke, setCurrentJoke] = useCookie("joke", 0);
+	console.log(currentJoke);
 
 	const handleJoke = async (value) => {
 		setLoading(true);

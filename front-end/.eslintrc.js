@@ -34,6 +34,7 @@ module.exports = {
 		"react/no-unstable-nested-components": "off",
 		"react/display-name": "off",
 		"react/no-unescaped-entities": "off",
+		"no-console": "off",
 	},
 	ignorePatterns: [".eslintrc.js"],
 };
