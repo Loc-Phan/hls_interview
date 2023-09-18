@@ -4,16 +4,39 @@ import Button from "@/components/Button";
 
 const Joke = () => {
 	const [currentJoke, setCurrentJoke] = useState(0);
-	const handleJoke = () => {
-		if (currentJoke === JOKES.length - 1) {
-			setCurrentJoke(-1);
-			return;
+	const [loading, setLoading] = useState(false);
+
+	const handleJoke = async (value) => {
+		setLoading(true);
+		try {
+			const res = await fetch(process.env.REACT_APP_API_KEY, {
+				method: "POST",
+				body: JSON.stringify({
+					id: currentJoke,
+					value,
+				}),
+			});
+			if (res.status === 200) {
+				if (currentJoke !== JOKES.length - 1) {
+					setCurrentJoke(currentJoke + 1);
+				} else {
+					setCurrentJoke(-1);
+				}
+			}
+		} catch (e) {
+			// console.log(e);
+		} finally {
+			setLoading(false);
 		}
-		setCurrentJoke(currentJoke + 1);
 	};
 
 	return (
 		<div className="flex-1">
+			{loading && (
+				<div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-black opacity-40 z-20">
+					<div className="loader" />
+				</div>
+			)}
 			<div className="flex flex-col justify-center bg-green py-12 md:py-16 text-center">
 				<p className="mb-4 md:mb-6 text-lg md:text-4xl text-white font-semibold">
 					A joke a day keeps the docter away
@@ -34,16 +57,16 @@ const Joke = () => {
 						</p>
 					</div>
 					<div className="hidden lg:block w-1/2 h-[1px] bg-neutral1" />
-					<div className="flex gap-10 justify-center py-10">
+					<div className="flex gap-10 justify-center mt-10">
 						<Button
 							title="This is funny!"
 							bgColor="bg-blue"
-							onClick={handleJoke}
+							onClick={() => handleJoke(1)}
 						/>
 						<Button
 							title="This is not funny!"
 							bgColor="bg-green"
-							onClick={handleJoke}
+							onClick={() => handleJoke(0)}
 						/>
 					</div>
 				</div>

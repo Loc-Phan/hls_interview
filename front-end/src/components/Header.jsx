@@ -6,7 +6,7 @@ const Header = () => (
 			alt="joke-logo"
 		/>
 		<div className="flex items-center">
-			<div className="mr-2 text-right">
+			<div className="mr-2 md:mr-3 text-right">
 				<p className="text-xs md:text-sm italic">Handicrafted by</p>
 				<p className="text-xs md:text-sm font-medium">Jim HLS</p>
 			</div>
