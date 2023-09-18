@@ -5,25 +5,22 @@ import useCookie from "./hooks/useCookie";
 
 const Joke = () => {
 	const [loading, setLoading] = useState(false);
-	const [currentJoke, setCurrentJoke] = useCookie("joke", 0);
-	console.log(currentJoke);
+	const [currentJoke, setCurrentJoke] = useCookie("joke", []);
 
 	const handleJoke = async (value) => {
 		setLoading(true);
 		try {
+			// record the vote in database use fakeapi
 			const res = await fetch(process.env.REACT_APP_API_KEY, {
 				method: "POST",
 				body: JSON.stringify({
-					id: currentJoke,
+					id: currentJoke.length,
 					value,
 				}),
 			});
 			if (res.status === 200) {
-				if (currentJoke !== JOKES.length - 1) {
-					setCurrentJoke(currentJoke + 1);
-				} else {
-					setCurrentJoke(-1);
-				}
+				// use cookie to track if a user has voted for a joke
+				setCurrentJoke([...currentJoke, { id: currentJoke.length, value }]);
 			}
 		} catch (e) {
 			// console.log(e);
@@ -47,7 +44,7 @@ const Joke = () => {
 					If you joke wrong away, your teeth have to pay. (Serious)
 				</p>
 			</div>
-			{currentJoke === -1 ? (
+			{currentJoke.length === JOKES.length ? (
 				<p className="text-sm md:text-base font-normal h-80 py-10 text-center">
 					That's all the jokes for today! Come back another day!
 				</p>
@@ -55,7 +52,7 @@ const Joke = () => {
 				<div className="flex flex-col items-center container-md max-w-3xl px-6 lg:px-0 md:h-80">
 					<div className="pt-10 h-72 md:h-48">
 						<p className="text-sm md:text-base font-normal">
-							{JOKES[currentJoke]}
+							{JOKES[currentJoke.length]}
 						</p>
 					</div>
 					<div className="hidden lg:block w-1/2 h-[1px] bg-neutral1" />

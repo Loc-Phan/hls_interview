@@ -15,7 +15,7 @@ const encrypt = (value) => {
 		).toString();
 		return ciphertext;
 	}
-	return JSON.stringify(value);
+	return value;
 };
 
 // Decrypt
@@ -25,7 +25,7 @@ const decrypt = (value) => {
 		const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 		return decryptedData;
 	}
-	return JSON.parse(value);
+	return value;
 };
 
 const useCookie = (key, initialValue) => {
