@@ -56,7 +56,7 @@ const Joke = () => {
 						</p>
 					</div>
 					<div className="hidden lg:block w-1/2 h-[1px] bg-neutral1" />
-					<div className="flex gap-10 justify-center mt-10">
+					<div className="flex gap-10 justify-center my-10">
 						<Button
 							title="This is funny!"
 							bgColor="bg-blue"
